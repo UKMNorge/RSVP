@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new UKMNorge\DesignBundle\UKMDesignBundle(),
             new UKMNorge\RSVPBundle\UKMRSVPBundle(),
             new UKMNorge\DipBundle\UKMDipBundle(),
+            new UKMNorge\SMSBundle\UKMSMSBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

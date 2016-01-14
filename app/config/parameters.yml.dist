@@ -23,3 +23,7 @@ parameters:
     dip_location: 'ambassador'
     dip_firewall_area: secure_area
     dip_entry_point: ukm_amb_join_address
+    
+    ukmsms.system_id: UKMRSVP
+    ukmsms.price: 0.4
+    ukmsms.sender: UKMNorge
