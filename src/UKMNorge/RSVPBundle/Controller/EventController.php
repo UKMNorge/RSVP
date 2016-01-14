@@ -28,6 +28,10 @@ class EventController extends Controller
 	    
 	    $event = $eventServ->get( $id );
 	    $view_data['event'] = $event;
+	    
+	    $securityContext = $this->container->get('security.authorization_checker');
+		$view_data['logged_in'] = $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED');
+    
 	    return $this->render('UKMRSVPBundle:Event:view.html.twig', $view_data);
     }
 

@@ -24,8 +24,8 @@ class EventService {
 		return $event->getName();
 	}
 	
-	public function getDate( $event ) {
-		return $event->getDate();
+	public function getDateStart( $event ) {
+		return $event->getDateStart();
 	}
 	
 	public function getPlace( $event ) {
@@ -49,11 +49,28 @@ class EventService {
 	public function getSpotsTaken( $event ) {
 		return rand(0,1);
 	}
+	
+	public function getStatusCountYes( $event ) {
+		return rand(0,10);		
+	}
+	
+	public function getStatusCountNo( $event ) {
+		return rand(0,10);
+	}
+	
+	public function getStatusCountMaybe( $event ) {
+		return rand(0,10);
+	}
 
 	public function getUrl( $event ) {
 		$data = array();
 		$data['id'] = $event->getId();
 		$data['name'] = $this->getName( $event );
 		return $this->router->generate('ukmrsvp_event', $data);
+	}
+	
+	public function getDescription( $event ) {
+#		return $event->getDescription();
+	return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget erat ac tellus molestie condimentum. Pellentesque in est tortor. Mauris vestibulum purus et libero imperdiet, suscipit facilisis neque hendrerit. Suspendisse a nunc eget mi aliquam pretium eget eget felis. Suspendisse quis lacinia metus. Nam a maximus lacus. Aliquam neque ex, dignissim non risus iaculis, varius vehicula ligula. Cras a urna eget ligula ultricies convallis.';
 	}
 }

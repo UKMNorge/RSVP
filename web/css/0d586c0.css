@@ -1,0 +1,75 @@
+/* BODY STYLES */
+	.center {
+		text-align: center;
+	}
+
+/* EVENT HEADER */
+	.eventHeader {
+	    padding: 25px 20px;
+	    background: rgba(255,255,255,0.35);
+	    position: relative;
+	}
+	.eventHeader:after {
+	    content: '';
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: url('http://www.klikk.no/incoming/img-1178980/BINARY/original/BRIMI_lavkar(44)_130.jpg') no-repeat;
+	    background-size: cover;
+	    opacity: 1;
+	    z-index: -1;
+	    border-radius: 10px 10px 0px 0px;
+	}
+	.eventHeader h1 {
+	    margin: 0px auto 0px auto;
+	}
+	.eventHeader p {
+	    font-size: 18px;
+	    margin-top: 0px;
+	}
+
+/* EVENT STATUS */
+	.eventStatus.alert {
+	    border-radius: 0px;
+	}
+	
+	.attendingStatus {
+		margin-bottom: 50px;
+	}
+	.attendingStatus h1 {
+	    margin: 0px;
+	}
+
+/* DATE ICON */
+	.dateIcon {
+		margin-bottom: 0px;
+	    border-radius: 8px 8px 0px 0px;
+	    background: rgba(255, 255, 255, 0.65);
+	    text-align: center;
+	    padding: 2px 20px 0px 20px;
+	    border: 1px solid rgba(255,255,255, 0.8);
+	}
+	.dateIcon h1 {
+	    border-bottom: 0px;
+	    font-size: 30px;
+	    margin: 5px 0px;
+	}
+	.dateIcon h3 {
+		margin-top: 0px;
+	    background: #EC3232;
+	    margin: 0px -20px;
+	    font-size: 15px;
+	    padding: 3px 0px;
+	    color: #fff;
+	    text-transform: uppercase;
+	}
+
+/* BOX FOR RSVP */
+	.rsvp {
+	    margin: 0px 0px 40px;
+	}
+	.rsvp h2 {
+		margin-top: 0px;
+	}
