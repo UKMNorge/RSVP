@@ -39,10 +39,17 @@ class TokenController extends Controller
         }
 
     	require_once('UKM/curl.class.php');
+
     	// Dette er entry-funksjonen til DIP-innlogging.
     	// Her sjekker vi om brukeren har en session med en autentisert token, 
     	// og hvis ikke genererer vi en og sender brukeren videre til Delta.
 
+        // Registrer hvilken side brukeren var på
+        $previous = $request->headers->get('referer');
+        $uri = parse_url($previous);
+        var_dump($uri);
+        var_dump($request);
+        throw new Exception('Staaaahp!');
     	// Send request to Delta with token-info
     	// $dipURL = 'http://delta.ukm.dev/web/app_dev.php/dip/token';
         #$location = 'ambassador';
@@ -91,7 +98,7 @@ class TokenController extends Controller
                             $this->get("security.token_storage")->setToken($token);
                         }
                         else {
-                            $this->get("security.token_storage")->setToken($token);
+                            $this->get("security.context")->setToken($token);
                         }
 
 				        // Fire the login event
