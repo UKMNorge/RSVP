@@ -15,6 +15,7 @@ class EventController extends Controller
         // Dette er også entry-point for innlogging fra DIP
         $referer = $this->get('session')->get('referer');
         if ($referer) {
+            $this->get('session')->remove('referer');
             return $this->redirect($referer);
         }
 
