@@ -1,6 +1,6 @@
 <?php
 
-namespace UKMNorge\UKMRSVPBundle;
+namespace UKMNorge\RSVPBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

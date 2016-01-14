@@ -1,0 +1,5 @@
+services:
+    ukmrsvp.event:
+        class: UKMNorge\RSVPBundle\Services\EventService
+        arguments: ["@service_container", "@router"]
+        scope: request

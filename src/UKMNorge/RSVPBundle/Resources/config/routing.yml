@@ -1,0 +1,7 @@
+ukmrsvp_homepage:
+    path:     /
+    defaults: { _controller: UKMRSVPBundle:Event:list }
+
+ukmrsvp_event:
+    path: /{id}-{name}
+    defaults: { _controller: UKMRSVPBundle:Event:view }

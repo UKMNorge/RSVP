@@ -1,6 +1,6 @@
 <?php
 
-namespace UKMNorge\UKMRSVPBundle\DependencyInjection;
+namespace UKMNorge\RSVPBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

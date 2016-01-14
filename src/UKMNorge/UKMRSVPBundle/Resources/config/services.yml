@@ -1,4 +1,0 @@
-services:
-#    ukmrsvp.example:
-#        class: UKMNorge\UKMRSVPBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]

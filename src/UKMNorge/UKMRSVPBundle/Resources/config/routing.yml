@@ -1,3 +1,0 @@
-ukmrsvp_homepage:
-    path:     /
-    defaults: { _controller: UKMRSVPBundle:Default:index }
