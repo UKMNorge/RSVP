@@ -60,6 +60,8 @@ class EventController extends Controller
 				$view_data['waiting'] = $waiting;
 			}
 		}
+		
+		$view_data['waitingServ']->getNextInLine( $user, $event );
     
 	    return $this->render('UKMRSVPBundle:Event:view.html.twig', $view_data);
     }

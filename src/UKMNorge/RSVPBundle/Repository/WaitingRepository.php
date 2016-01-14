@@ -17,11 +17,7 @@ class WaitingRepository extends \Doctrine\ORM\EntityRepository
 		    ->setParameter('event', $event)
 		    ->getQuery();
 		
-		$result = $query->getSingleResult();
-		if( is_array( $result ) ) {
-			return (int) $result[1];
-		}
-		return (int) $result;
+		return $query->getSingleScalarResult();
 	}
 
 	public function getMyNumber( $user, $event ) {
@@ -32,8 +28,25 @@ class WaitingRepository extends \Doctrine\ORM\EntityRepository
 		return false;
 	}	
 	
+	public function getNextInLine( $user, $event ) {
+		$queue_id = $this->getMyNumber( $user, $event );
+		if( false === $queue_id ) {
+			return false;
+		}
+		
+		$query = $this->createQueryBuilder('w')
+			->select('w.user')
+		    ->where('w.event = :event')
+		    ->andWhere('w.id < :queue_id')
+		    ->setParameter('event', $event)
+		    ->setParameter('queue_id', $queue_id)
+		    ->orderby('w.id', 'ASC')
+		    ->setMaxResults(1)
+		    ->getQuery();
+		return $query->getSingleScalarResult();
+	}
+	
 	public function getCountInFront( $user, $event ) {
-
 		$queue_id = $this->getMyNumber( $user, $event );
 		if( false === $queue_id ) {
 			return $this->getCount( $event )+1;
@@ -49,11 +62,6 @@ class WaitingRepository extends \Doctrine\ORM\EntityRepository
 		    ->getQuery();
 		
 
-		$result = $query->getSingleResult();
-		if( is_array( $result ) ) {
-			return (int) $result[1]+1;
-		}
-		return (int) $result+1;
-		
+		return $query->getSingleScalarResult()+1;
 	}
 }

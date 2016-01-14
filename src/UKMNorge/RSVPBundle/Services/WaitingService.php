@@ -26,4 +26,8 @@ class WaitingService {
 	public function getMyNumber( $user, $event ) {
 		return $this->repo->getCountInFront( $user, $event );
 	}
+	
+	public function getNextInLine( $user, $event ) {
+		return $this->repo->getNextInLine( $user, $event );
+	}
 }
