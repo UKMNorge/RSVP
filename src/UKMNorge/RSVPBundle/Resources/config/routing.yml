@@ -9,3 +9,7 @@ ukmrsvp_event:
 ukmrsvp_event_response:
     path: /response/{id}-{name}/{response}
     defaults: { _controller: UKMRSVPBundle:Event:response }
+
+ukmrsvp_test:
+    path: /test/
+    defaults: { _controller: UKMRSVPBundle:Event:test }

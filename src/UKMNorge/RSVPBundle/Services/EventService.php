@@ -9,6 +9,7 @@ class EventService {
 		$this->doctrine = $this->container->get('doctrine');
 		$this->em 		= $this->doctrine->getManager();
 		$this->repo 	= $this->doctrine->getRepository('UKMRSVPBundle:Event');
+		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
 		$this->router 	= $router;
 	}
 	
@@ -48,6 +49,16 @@ class EventService {
 		$spots = $this->getSpots( $event );
 		$taken = $this->getSpotsTaken( $event );
 		return (int) $spots - (int) $taken;
+	}
+
+	public function getAttending($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$attending = array();
+		$list = $this->responseRepo->findBy(array('event'=>$event, 'status' => 'yes'));
+		foreach ($list as $item) {
+			$attending[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $attending;
 	}
 	
 	public function getSpotsTaken( $event ) {

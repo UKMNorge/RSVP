@@ -112,4 +112,13 @@ class EventController extends Controller
         $event = $eventServ->get($id);
         
     }
+
+    public function testAction() {
+        $eventServ = $this->get('ukmrsvp.event');
+        $attending = $eventServ->getAttending(1);
+
+        var_dump($attending);
+
+        throw new Exception('teeeeest');
+    }
 }
