@@ -9,3 +9,7 @@ ukm_design:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+ukm_dip:
+    resource: "@UKMDipBundle/Resources/config/routing.yml"
+    prefix:   /dip/
