@@ -69,6 +69,14 @@ class EventService {
 		return $this->router->generate('ukmrsvp_event', $data);
 	}
 	
+	public function getUrlResponse( $event, $response='yes' ) {
+		$data = array();
+		$data['id'] = $event->getId();
+		$data['name'] = $this->getName( $event );
+		$data['response'] = $response;
+		return $this->router->generate( 'ukmrsvp_event_response', $data );
+	}
+	
 	public function getDescription( $event ) {
 #		return $event->getDescription();
 	return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget erat ac tellus molestie condimentum. Pellentesque in est tortor. Mauris vestibulum purus et libero imperdiet, suscipit facilisis neque hendrerit. Suspendisse a nunc eget mi aliquam pretium eget eget felis. Suspendisse quis lacinia metus. Nam a maximus lacus. Aliquam neque ex, dignissim non risus iaculis, varius vehicula ligula. Cras a urna eget ligula ultricies convallis.';
