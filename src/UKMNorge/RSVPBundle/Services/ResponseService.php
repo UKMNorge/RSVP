@@ -41,8 +41,10 @@ class ResponseService {
 
 	public function setResponse($user, $event, $response) {
 		$this->waitServ	= $this->container->get('ukmrsvp.waiting');
-
-		if ($res = $this->responseRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
+		$this->eventServ= $this->container->get('ukmrsvp.event');
+		
+		$res = $this->get( $user, $event );
+		if ( $res ) {
             $res->setStatus($response);
         }
         else {
@@ -52,32 +54,20 @@ class ResponseService {
 	        $res->setStatus($response);
 	        
         }
-	    // Sjekk om personen har stått på venteliste. I så fall, fjern de derfra
-        if ($wait = $this->waitRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
-       	    // Flytt neste person fra venteliste over til attending
-            $this->waitServ->moveNextInLine($event, $user);
-        }
-
         $this->em->persist($res);
 	    $this->em->flush();
-	}
 
-	public function alertUserPromoted( $user, $event ) {
-		$data = array();
-
-		$data['id'] = $event->getId();
-		$data['name'] = $this->getName( $event );
-		$data['response'] = 'no';
-
-		$link = $this->router->generate('ukmrsvp_event_response', 'no');
-		
-		$message = 'Noen har meldt seg av '. $event->getName() .' og du er nå påmeldt! Hvis du ikke kan komme, klikk på lenken: '. $link;
-		
-		$UKMSMS = $this->container->get('ukmsms');
-		try {
-		    $UKMSMS->sendSMS( $user->getPhone(), $message );
-		} catch( Exception $e ) {
-			mail('support@ukm.no', 'RSVP ERROR', 'Denne SMS ble ikke sendt: '. $message);
-		}
+	    // Sjekk om personen har stått på venteliste. I så fall, fjern de derfra
+	    $waiting = $this->waitServ->isWaiting($user, $event);
+	    if( $waiting ) {
+	    	$waiting_row = $this->waitServ->get( $user, $event );
+	        $this->em->remove( $waiting_row );
+		    $this->em->flush();
+	    }
+	    
+	    if( $this->eventServ->isOpen( $event ) ) {
+	       	// Flytt neste person fra venteliste over til attending
+	        $this->waitServ->moveNextInLine($event);
+	    }
 	}
 }

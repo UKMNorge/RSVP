@@ -29,18 +29,11 @@ class WaitingRepository extends \Doctrine\ORM\EntityRepository
 		return false;
 	}	
 	
-	public function getNextInLine( $user, $event ) {
-		$queue_id = $this->getMyNumber( $user, $event );
-		if( false === $queue_id ) {
-			return false;
-		}
-		
+	public function getNextInLine( $event ) {
 		$query = $this->createQueryBuilder('w')
 			->select('w.user')
 		    ->where('w.event = :event')
-		    ->andWhere('w.id < :queue_id')
 		    ->setParameter('event', $event)
-		    ->setParameter('queue_id', $queue_id)
 		    ->orderby('w.id', 'ASC')
 		    ->setMaxResults(1)
 		    ->getQuery();

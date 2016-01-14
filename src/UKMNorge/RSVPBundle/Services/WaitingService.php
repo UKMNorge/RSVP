@@ -2,6 +2,8 @@
 namespace UKMNorge\RSVPBundle\Services;
 
 use UKMNorge\RSVPBundle\Entity\Waiting;
+use Exception;
+
 class WaitingService {
 	
 	var $container;
@@ -17,9 +19,14 @@ class WaitingService {
 #		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
 		$this->router 		= $router;
 	}
+
+	public function get( $user, $event ) {
+		return $this->repo->findOneBy( array('user'=>$user->getDeltaId(), 'event'=>$event->getId()) );
+	}
+
 	
 	public function isWaiting( $user, $event ) {
-		$result = $this->repo->findOneBy( array('user'=>$user->getDeltaId(), 'event'=>$event->getId()) );
+		$result = $this->get( $user, $event );
 		return null !== $result;
 	}
 
@@ -40,13 +47,14 @@ class WaitingService {
 		return $this->repo->getCountInFront( $user, $event );
 	}
 
-	public function moveNextInLine($event, $user) {
-		$next = $this->getNextInLine($user, $event);
+	public function moveNextInLine($event) {
+		$next = $this->getNextInLine($event);
 		$userProvider = $this->container->get('dipb_user_provider');
 		if ($next) {
 			$nextUser = $userProvider->loadUserByUsername($next);
 			// Neste person deltar
-			$this->responseServ->setResponse($event, $nextUser, 'yes');
+			$this->responseServ->setResponse($nextUser, $event, 'yes');
+			$this->alertUserPromoted( $nextUser, $event );
 		}
 	}
 
@@ -63,7 +71,29 @@ class WaitingService {
 
 	}
 
-	public function getNextInLine( $user, $event ) {
-		return $this->repo->getNextInLine( $user, $event );
+	public function getNextInLine( $event ) {
+		return $this->repo->getNextInLine( $event );
 	}
+	
+	public function alertUserPromoted( $user, $event ) {
+		$this->eventServ = $this->container->get('ukmrsvp.event');
+
+		$data = array();
+
+		$data['id'] = $event->getId();
+		$data['name'] = $this->eventServ->getName( $event );
+		$data['response'] = 'no';
+
+		$link = $this->router->generate('ukmrsvp_event_response', $data, true);
+		
+		$message = 'Noen har meldt seg av '. $event->getName() .' og du er nå påmeldt! Hvis du ikke kan komme, klikk på lenken: '. $link;
+		
+		$UKMSMS = $this->container->get('ukmsms');
+		try {
+		    $UKMSMS->sendSMS( $user->getPhone(), $message );
+		} catch( Exception $e ) {
+			mail('support@ukm.no', 'RSVP ERROR', 'Denne SMS ble ikke sendt: '. $message);
+		}
+	}
+
 }
