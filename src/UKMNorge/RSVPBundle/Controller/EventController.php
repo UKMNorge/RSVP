@@ -11,6 +11,13 @@ class EventController extends Controller
 {
     public function listAction()
     {
+        // Dette er også entry-point for innlogging fra DIP
+        $referer = $this->get('session')->get('referer');
+        if ($referer) {
+            return $this->redirect($referer);
+        }
+
+
 		$view_data = array();
     	$eventServ = $this->get('ukmrsvp.event');
     	$view_data['eventServ'] = $eventServ;
