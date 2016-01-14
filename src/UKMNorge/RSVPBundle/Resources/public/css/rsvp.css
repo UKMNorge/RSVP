@@ -73,3 +73,11 @@
 	.rsvp h2 {
 		margin-top: 0px;
 	}
+	
+/* DATE TIME INFOS */
+.timeDetails {
+    background: #ddd;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    padding: 2px 4px;
+}

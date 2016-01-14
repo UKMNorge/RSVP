@@ -27,6 +27,10 @@ class EventService {
 	public function getDateStart( $event ) {
 		return $event->getDateStart();
 	}
+
+	public function getDateStop( $event ) {
+		return $event->getDateStop();
+	}
 	
 	public function getPlace( $event ) {
 		return $event->getPlace();
