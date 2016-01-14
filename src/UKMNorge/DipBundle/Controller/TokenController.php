@@ -96,7 +96,7 @@ class TokenController extends Controller
 
 				        // Fire the login event
 				        // Logging the user in above the way we do it doesn't do this automatically
-				        //now dispatch the login event
+				        // now dispatch the login event
                         
                         #$request = $rStack->getCurrentRequest();
                         if (!$request) {

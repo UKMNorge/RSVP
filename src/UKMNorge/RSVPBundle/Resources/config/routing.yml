@@ -5,3 +5,7 @@ ukmrsvp_homepage:
 ukmrsvp_event:
     path: /{id}-{name}
     defaults: { _controller: UKMRSVPBundle:Event:view }
+
+ukmrsvp_event_response:
+    path: /response/{id}-{name}/{response}
+    defaults: { _controller: UKMRSVPBundle:Event:response }

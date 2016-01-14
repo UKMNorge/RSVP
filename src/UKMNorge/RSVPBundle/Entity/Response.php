@@ -3,12 +3,15 @@
 namespace UKMNorge\RSVPBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constrains as Assert;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Response
  *
  * @ORM\Table(name="response")
  * @ORM\Entity(repositoryClass="UKMNorge\RSVPBundle\Repository\ResponseRepository")
+ * @UniqueEntity(fields={"event", "user"})
  */
 class Response
 {
@@ -26,7 +29,6 @@ class Response
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="event")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-
      */
     private $event;
 
