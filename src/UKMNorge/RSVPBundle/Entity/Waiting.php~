@@ -94,28 +94,5 @@ class Waiting
     {
         return $this->user;
     }
-
-    /**
-     * Set event
-     *
-     * @param \UKMNorge\RSVPBundle\Entity\Event $event
-     *
-     * @return Waiting
-     */
-    public function setEvent(\UKMNorge\RSVPBundle\Entity\Event $event = null)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return \UKMNorge\RSVPBundle\Entity\Event
-     */
-    public function getEvent()
-    {
-        return $this->event;
-    }
 }
+

@@ -10,4 +10,50 @@ namespace UKMNorge\RSVPBundle\Repository;
  */
 class WaitingRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getCount( $event ) {
+		$query = $this->createQueryBuilder('w')
+			->select('COUNT(w.id)')
+		    ->where('w.event = :event')
+		    ->setParameter('event', $event)
+		    ->getQuery();
+		
+		$result = $query->getSingleResult();
+		if( is_array( $result ) ) {
+			return (int) $result[1];
+		}
+		return (int) $result;
+	}
+
+	public function getMyNumber( $user, $event ) {
+		$response = $this->findOneBy( array('user' => $user->getDeltaId(), 'event' => $event));
+		if( null !== $response ) {
+			return $response->getId();
+		}
+		return false;
+	}	
+	
+	public function getCountInFront( $user, $event ) {
+
+		$queue_id = $this->getMyNumber( $user, $event );
+		if( false === $queue_id ) {
+			return $this->getCount( $event )+1;
+		}
+
+		$query = $this->createQueryBuilder('w')
+			->select('COUNT(w.id)')
+		    ->where('w.event = :event')
+		    ->andWhere('w.id < :queue_id')
+		    ->setParameter('event', $event)
+		    ->setParameter('queue_id', $queue_id)
+		    ->orderby('w.id', 'ASC')
+		    ->getQuery();
+		
+
+		$result = $query->getSingleResult();
+		if( is_array( $result ) ) {
+			return (int) $result[1]+1;
+		}
+		return (int) $result+1;
+		
+	}
 }
