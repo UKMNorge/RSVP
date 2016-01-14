@@ -72,6 +72,7 @@ class EventController extends Controller
     
     public function responseAction($id, $name, $response) {
         $response = strtolower($response);
+        $responseServ = $this->get('ukmrsvp.response');
         // Trenger ikke tenke på sikring, siden brannmur og token_storage fikser det for oss.
         $eventServ = $this->get('ukmrsvp.event');
         $em = $this->get('doctrine')->getManager();
@@ -87,45 +88,15 @@ class EventController extends Controller
             throw new Exception('Noe mangler...', 20001);
         }
         if ($response == 'yes' || $response == 'no' || $response == 'maybe') {
-            $resRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Response');
-            if ($res = $resRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
-                $res->setStatus($response);
-            }
-            else {
-                $res = new Response();
-                $res->setEvent($event);
-                $res->setUser($user->getDeltaId());
-                $res->setStatus($response);
-                $em->persist($res);
-            }
-
-            // Sjekk om personen har stått på venteliste. I så fall, fjern de derfra
-            $waitRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Waiting');
-            if ($wait = $waitRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
-                // Brukeren står på venteliste, fjern h*n
-                $em->remove($wait);
-            }
+            $responseServ->setResponse($user, $event, $response);
         }
         else if ($response == 'wait' || $response == 'donotwait') {
-            $waitRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Waiting');
-            if ($wait = $waitRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
-                // Brukeren står på venteliste, fjern h*n
-                $em->remove($wait);
-            }
-            else {
-                // Legg til brukeren på venteliste
-                $wait = new Waiting();
-                $wait->setEvent($event);
-                $wait->setUser($user->getDeltaId());
-                $em->persist($wait);
-            }
+            $waitServ->setWaiting($user, $event);
         }
         else {
             throw new Exception('Svar må enten være ja, nei, kanskje, vent eller ikke vent på engelsk.', 20002);
         }
-       
-        $em->flush();
-
+    
         $route_data['id'] = $id;
         $route_data['name'] = $name;
         return $this->redirectToRoute('ukmrsvp_event', $route_data);
