@@ -487,7 +487,7 @@ class User implements UserInterface
         return $this->gender;
     }
     
-    public function getThumb() {
+    public function getThumbnail() {
 	    return '//graph.facebook.com/'.$this->getFacebookId() .'/picture';
     }
     
