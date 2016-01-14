@@ -32,6 +32,8 @@ class EventController extends Controller
 		$view_data = array();
     	$eventServ = $this->get('ukmrsvp.event');
     	$view_data['eventServ'] = $eventServ;
+    	
+    	$view_data['waitingServ'] = $this->get('ukmrsvp.waiting');
 	    
 	    $event = $eventServ->get( $id );
 	    $view_data['event'] = $event;

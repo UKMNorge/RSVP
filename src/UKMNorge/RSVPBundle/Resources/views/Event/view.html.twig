@@ -47,27 +47,46 @@
 			<p>Du må logge inn med din UKMID for å melde deg på. Trykk logg inn for å komme i gang</p>
 			<a href="{{ url('ukm_dip_login') }}" class="btn btn-success">Logg inn</a>
 		{% else %}
-			{% if my_response is not defined %}
-				<p><b>Du har ikke svart</b></p>
+			{% if not eventServ.isOpen( event ) %}
+				<p>Hendelsen er full, og {{ waitingServ.getCount( event ) }} står på venteliste. Vil du også stå på venteliste?</p>
+
+				<p>
+					<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
+						{{ my_response is defined and "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Stå på venteliste (nr {{ waitingServ.getMyNumber( event ) }})
+					</a>
+				</p>
+				<p>
+					<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
+						{{ my_response is defined and "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Meld meg av ventelisten
+					</a>
+				</p>
+
+				
+			{% else %}		
+				{% if my_response is not defined %}
+					<p><b>Du har ikke svart</b></p>
+				{% endif %}
+				<p>
+					<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
+						{{ my_response is defined and "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Jeg kommer
+					</a>
+				</p>
+				<p>
+					<a href="{{ eventServ.getUrlResponse( event, 'maybe' ) }}" class="btn btn-warning">
+						{{ my_response is defined and "maybe" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Jeg kommer kanskje
+					</a>
+				</p>
+				<p>
+					<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
+						{{ my_response is defined and "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Jeg kommer ikke
+					</a>
+				</p>
 			{% endif %}
-			<p>
-				<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
-					{{ "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-					Jeg kommer
-				</a>
-			</p>
-			<p>
-				<a href="{{ eventServ.getUrlResponse( event, 'maybe' ) }}" class="btn btn-warning">
-					{{ "maybe" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-					Jeg kommer kanskje
-				</a>
-			</p>
-			<p>
-				<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
-					{{ "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-					Jeg kommer ikke
-				</a>
-			</p>
 		{% endif %}
 	</div>
 

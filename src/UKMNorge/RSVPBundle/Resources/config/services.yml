@@ -8,3 +8,8 @@ services:
         class: UKMNorge\RSVPBundle\Services\ResponseService
         arguments: ["@service_container", "@router"]
         scope: request
+
+    ukmrsvp.waiting:
+        class: UKMNorge\RSVPBundle\Services\WaitingService
+        arguments: ["@service_container", "@router"]
+        scope: request
