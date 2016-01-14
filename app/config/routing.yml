@@ -1,0 +1,11 @@
+ukmrsvp:
+    resource: "@UKMRSVPBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ukm_design:
+    resource: "@UKMDesignBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
