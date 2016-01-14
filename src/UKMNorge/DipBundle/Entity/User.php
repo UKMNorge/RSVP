@@ -486,4 +486,16 @@ class User implements UserInterface
     {
         return $this->gender;
     }
+    
+    public function getThumb() {
+	    return '//graph.facebook.com/'.$this->getFacebookId() .'/picture';
+    }
+    
+    public function getImage() {
+   	    return '//graph.facebook.com/'.$this->getFacebookId() .'/picture?type=large';
+   	}
+   	
+   	public function getLink() {
+	   	return '//facebook.com/profile.php?id='.$this->getFacebookId();
+    }
 }
