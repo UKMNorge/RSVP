@@ -99,4 +99,16 @@ class EventController extends Controller
         $route_data['name'] = $name;
         return $this->redirectToRoute('ukmrsvp_event', $route_data);
     }
+
+    public function ventelisteAction($id, $name) {
+        $eventServ = $this->get('ukmrsvp.event');
+        $em = $this->get('doctrine')->getManager();
+        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $event = $eventServ->get($id);
+        
+
+
+
+    }
 }
