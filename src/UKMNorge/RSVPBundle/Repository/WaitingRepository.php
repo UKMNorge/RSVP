@@ -2,6 +2,7 @@
 
 namespace UKMNorge\RSVPBundle\Repository;
 
+use Doctrine\ORM\NoResultException;
 /**
  * WaitingRepository
  *
@@ -43,7 +44,13 @@ class WaitingRepository extends \Doctrine\ORM\EntityRepository
 		    ->orderby('w.id', 'ASC')
 		    ->setMaxResults(1)
 		    ->getQuery();
-		return $query->getSingleScalarResult();
+		try {
+			$result = $query->getSingleScalarResult();
+		}
+		catch (NoResultException $e ) {
+			return false;
+		}
+		return $result;
 	}
 	
 	public function getCountInFront( $user, $event ) {

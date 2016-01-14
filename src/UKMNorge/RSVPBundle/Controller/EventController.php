@@ -33,7 +33,6 @@ class EventController extends Controller
 		$view_data = array();
     	$eventServ = $this->get('ukmrsvp.event');
     	$view_data['eventServ'] = $eventServ;
-    	
     	$view_data['waitingServ'] = $this->get('ukmrsvp.waiting');
 	    
 	    $event = $eventServ->get( $id );
@@ -61,7 +60,7 @@ class EventController extends Controller
 			}
 		}
 		
-		$view_data['waitingServ']->getNextInLine( $user, $event );
+		//$view_data['waitingServ']->getNextInLine( $user, $event );
     
 	    return $this->render('UKMRSVPBundle:Event:view.html.twig', $view_data);
     }
@@ -93,6 +92,7 @@ class EventController extends Controller
             $responseServ->setResponse($user, $event, $response);
         }
         else if ($response == 'wait' || $response == 'donotwait') {
+            $waitServ = $this->container->get('ukmrsvp.waiting');
             $waitServ->setWaiting($user, $event);
         }
         else {
@@ -111,8 +111,5 @@ class EventController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $event = $eventServ->get($id);
         
-
-
-
     }
 }

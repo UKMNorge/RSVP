@@ -1,5 +1,7 @@
 <?php
 namespace UKMNorge\RSVPBundle\Services;
+
+use UKMNorge\RSVPBundle\Entity\Waiting;
 class WaitingService {
 	
 	var $container;
@@ -9,8 +11,7 @@ class WaitingService {
 		$this->doctrine 	= $this->container->get('doctrine');
 		$this->em 			= $this->doctrine->getManager();
 		$this->repo			= $this->doctrine->getRepository('UKMRSVPBundle:Waiting');
-		$this->waitServ		= $this->container->get('ukmrsvp.waiting');
-		$this->eventServ	= $this->container->get('ukmrsvp.event');
+		#$this->eventServ	= $this->container->get('ukmrsvp.event');
 		$this->responseServ	= $this->container->get('ukmrsvp.response');
 #		$this->eventRepo	= $this->doctrine->getRepository('UKMRSVPBundle:Event');
 #		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
@@ -42,21 +43,22 @@ class WaitingService {
 	public function moveNextInLine($event, $user) {
 		$next = $this->getNextInLine($user, $event);
 		$userProvider = $this->container->get('dipb_user_provider');
-		$nextUser = $userProvider->loadUserByUsername($next);
-
-		// Neste person deltar
-		$this->responseServ->setResponse($event, $nextUser, 'yes');
+		if ($next) {
+			$nextUser = $userProvider->loadUserByUsername($next);
+			// Neste person deltar
+			$this->responseServ->setResponse($event, $nextUser, 'yes');
+		}
 	}
 
 	public function setWaiting($user, $event) {
-        if ($wait = $waitRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
+        if ($wait = $this->repo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
             // Brukeren står på venteliste, fjern h*n
             $em->remove($wait);
             $em->flush();
         }
         else {
             // legg til brukeren i ventelista
-            $this->waitServ->add($user, $event);
+            $this->add($user, $event);
         }
 
 	}

@@ -1,5 +1,7 @@
 <?php
 namespace UKMNorge\RSVPBundle\Services;
+
+use UKMNorge\RSVPBundle\Entity\Response;
 class ResponseService {
 	
 	var $container;
@@ -8,8 +10,8 @@ class ResponseService {
 		$this->container	= $container;
 		$this->doctrine 	= $this->container->get('doctrine');
 		$this->em 			= $this->doctrine->getManager();
-		$this->waitServ		= $this->container->get('ukmrsvp.waiting');
-		$this->eventServ	= $this->container->get('ukmrsvp.event');
+		#$this->waitServ		= $this->container->get('ukmrsvp.waiting');
+		#$this->eventServ	= $this->container->get('ukmrsvp.event');
 		$this->waitRepo		= $this->doctrine->getRepository('UKMRSVPBundle:Waiting');
 		$this->eventRepo	= $this->doctrine->getRepository('UKMRSVPBundle:Event');
 		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
@@ -38,7 +40,9 @@ class ResponseService {
 	}
 
 	public function setResponse($user, $event, $response) {
-		if ($res = $this->$resRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
+		$this->waitServ	= $this->container->get('ukmrsvp.waiting');
+
+		if ($res = $this->responseRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
             $res->setStatus($response);
         }
         else {
@@ -54,8 +58,8 @@ class ResponseService {
             $this->waitServ->moveNextInLine($event, $user);
         }
 
-        $em->persist($res);
-	    $em->flush();
+        $this->em->persist($res);
+	    $this->em->flush();
 	}
 
 	public function alertUserPromoted( $user, $event ) {
