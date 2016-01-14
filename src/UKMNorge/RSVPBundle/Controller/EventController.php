@@ -45,12 +45,18 @@ class EventController extends Controller
 		// Hva er brukerens svar?
 		if( $logged_in ) {
 			$user = $this->get('security.token_storage')->getToken()->getUser();
-
+			$view_data['my_user'] = $user;
+			
 			$responseServ = $this->get('ukmrsvp.response');
 			$response = $responseServ->get( $user, $event );
-
 			if( null !== $response ) {
 				$view_data['my_response'] = $response->getStatus();
+			}
+			
+			$waitingServ = $this->get('ukmrsvp.waiting');
+			$waiting = $waitingServ->isWaiting( $user, $event );
+			if( null !== $waiting ) {
+				$view_data['waiting'] = $waiting;
 			}
 		}
     

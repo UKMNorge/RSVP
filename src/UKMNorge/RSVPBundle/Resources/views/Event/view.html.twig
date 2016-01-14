@@ -48,22 +48,21 @@
 			<a href="{{ url('ukm_dip_login') }}" class="btn btn-success">Logg inn</a>
 		{% else %}
 			{% if not eventServ.isOpen( event ) %}
-				<p>Hendelsen er full, og {{ waitingServ.getCount( event ) }} står på venteliste. Vil du også stå på venteliste?</p>
+				<p>Hendelsen er full{% if waitingServ.getCount( my_user, event ) == 0 %}, men ingen står på venteliste. Vil du være den første på ventelisten?{% else %}, og {{ waitingServ.getCount( my_user, event ) }} står på venteliste. Vil du også stå på venteliste?{% endif %}
+				</p>
 
 				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
-						{{ my_response is defined and "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Stå på venteliste (nr {{ waitingServ.getMyNumber( event ) }})
+					<a href="{{ eventServ.getUrlResponse( event, 'wait' ) }}" class="btn btn-success">
+						{{ waiting is defined and waiting ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+						Stå på venteliste (nr {{ waitingServ.getMyNumber( my_user, event ) }})
 					</a>
 				</p>
 				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
-						{{ my_response is defined and "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+					<a href="{{ eventServ.getUrlResponse( event, 'donotwait' ) }}" class="btn btn-danger">
+						{{ waiting is not defined or (waiting is defined and not waiting) ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
 						Meld meg av ventelisten
 					</a>
 				</p>
-
-				
 			{% else %}		
 				{% if my_response is not defined %}
 					<p><b>Du har ikke svart</b></p>

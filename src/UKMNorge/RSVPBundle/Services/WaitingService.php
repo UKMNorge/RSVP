@@ -14,12 +14,16 @@ class WaitingService {
 		$this->router 		= $router;
 	}
 	
+	public function isWaiting( $user, $event ) {
+		$result = $this->repo->findOneBy( array('user'=>$user->getDeltaId(), 'event'=>$event->getId()) );
+		return null !== $result;
+	}
+	
 	public function getCount( $user, $event ) {
-#		$response = $this->waitingRepo->findOneBy( array('user'=>$user->getDeltaId(), 'event'=>$event->getId()) );
-		return rand(0,20);
+		return $this->repo->getCount( $event );
 	}
 	
 	public function getMyNumber( $user, $event ) {
-		return 123;
+		return $this->repo->getCountInFront( $user, $event );
 	}
 }
