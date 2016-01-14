@@ -58,5 +58,10 @@ class WaitingService {
             // legg til brukeren i ventelista
             $this->waitServ->add($user, $event);
         }
+
+	}
+
+	public function getNextInLine( $user, $event ) {
+		return $this->repo->getNextInLine( $user, $event );
 	}
 }
