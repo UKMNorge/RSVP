@@ -41,7 +41,7 @@ class EventController extends Controller
 			$response = $responseServ->get( $user, $event );
 
 			if( null !== $response ) {
-				$view_data['my_response'] = $response;
+				$view_data['my_response'] = $response->getStatus();
 			}
 		}
     

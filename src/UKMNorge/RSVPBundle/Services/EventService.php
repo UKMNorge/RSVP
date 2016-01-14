@@ -47,19 +47,22 @@ class EventService {
 	}
 	
 	public function getSpotsTaken( $event ) {
-		return rand(0,1);
+		return $this->getStatusCountYes( $event );
 	}
 	
 	public function getStatusCountYes( $event ) {
-		return rand(0,10);		
+		$responseServ = $this->container->get('ukmrsvp.response');
+		return $responseServ->getCountYes( $event );
 	}
 	
 	public function getStatusCountNo( $event ) {
-		return rand(0,10);
+		$responseServ = $this->container->get('ukmrsvp.response');
+		return $responseServ->getCountNo( $event );
 	}
 	
 	public function getStatusCountMaybe( $event ) {
-		return rand(0,10);
+		$responseServ = $this->container->get('ukmrsvp.response');
+		return $responseServ->getCountMaybe( $event );
 	}
 
 	public function getUrl( $event ) {
