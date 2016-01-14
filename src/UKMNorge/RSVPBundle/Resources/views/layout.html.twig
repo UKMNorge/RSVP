@@ -8,4 +8,7 @@
 
 {% block css %}
 	{{ parent() }}
+	{% stylesheets '@UKMRSVPBundle/Resources/public/css/rsvp.css' %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
 {% endblock %}
