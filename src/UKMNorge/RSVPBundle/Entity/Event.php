@@ -57,9 +57,9 @@ class Event
     private $spots;
 
     /**
-     * @var string
+     * @var text
      *
-     * @ORM\Column(name="Description", type="string", length=150)
+     * @ORM\Column(name="Description", type="text")
      */
     private $description;
 
