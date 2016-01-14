@@ -27,8 +27,10 @@
 	
 	<div class="attendingStatus">
 		<div class="col-xs-4 center">
+			<a href="#attending">
 			<h1>{{ eventServ.getStatusCountYes( event ) }}</h1>
 			<small>kommer</small>
+			</a>
 		</div>
 		<div class="col-xs-4 center">
 			<h1>{{ eventServ.getStatusCountMaybe( event ) }}</h1>
@@ -103,6 +105,7 @@
 	
 	<div class="clearfix"></div>
 	<div class="col-xs-12 attendingImages">
+	<a name="attending"></a>
 		{% for attending in eventServ.getAttending( event ) %}
 			<a href="{{ attending.getLink() }}" target="_blank">
 				<img src="{{ attending.getThumbnail() }}" width="75" />
