@@ -43,19 +43,21 @@
 	
 	<div class="col-xs-12 col-sm-6 pull-right center rsvp">
 		<h2>Være med?</h2>
-		{% if logged_in %}
+		{% if not logged_in %}
 			<p>Du må logge inn med din UKMID for å melde deg på. Trykk logg inn for å komme i gang</p>
-			<a href="#" class="btn btn-success">Logg inn</a>
+			<a href="{{ url('ukm_dip_login') }}" class="btn btn-success">Logg inn</a>
 		{% else %}
-			<p><b>Du har ikke svart</b></p>
+			{% if my_response is not defined %}
+				<p><b>Du har ikke svart</b></p>
+			{% endif %}
 			<p>
-				<a href="#" class="btn btn-success">Jeg kommer</a>
+				<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">Jeg kommer</a>
 			</p>
 			<p>
-				<a href="#" class="btn btn-warning">Jeg kommer kanskje</a>
+				<a href="{{ eventServ.getUrlResponse( event, 'maybe' ) }}" class="btn btn-warning">Jeg kommer kanskje</a>
 			</p>
 			<p>
-				<a href="#" class="btn btn-danger">Jeg kommer ikke</a>
+				<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">Jeg kommer ikke</a>
 			</p>
 		{% endif %}
 	</div>

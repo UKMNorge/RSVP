@@ -30,7 +30,20 @@ class EventController extends Controller
 	    $view_data['event'] = $event;
 	    
 	    $securityContext = $this->container->get('security.authorization_checker');
-		$view_data['logged_in'] = $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED');
+	    $logged_in = $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED');
+		$view_data['logged_in'] = $logged_in;
+    
+		// Hva er brukerens svar?
+		if( $logged_in ) {
+			$user = $this->get('security.token_storage')->getToken()->getUser();
+
+			$responseServ = $this->get('ukmrsvp.response');
+			$response = $responseServ->get( $user, $event );
+
+			if( null !== $response ) {
+				$view_data['my_response'] = $response;
+			}
+		}
     
 	    return $this->render('UKMRSVPBundle:Event:view.html.twig', $view_data);
     }

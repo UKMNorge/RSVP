@@ -3,3 +3,8 @@ services:
         class: UKMNorge\RSVPBundle\Services\EventService
         arguments: ["@service_container", "@router"]
         scope: request
+
+    ukmrsvp.response:
+        class: UKMNorge\RSVPBundle\Services\ResponseService
+        arguments: ["@service_container", "@router"]
+        scope: request
