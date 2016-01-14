@@ -101,5 +101,15 @@
 		{{ eventServ.getDescription( event ) }}
 	</div>
 	
+	<div class="clearfix"></div>
+	<div class="col-xs-12">
+		{% for attending in eventServ.getAttending( event ) %}
+			<a href="{{ attending.getLink() }}" class="thumbnail">
+				<img src="{{ attending.getImage() }}" width="75" />
+			</a>
+		{% endfor %}
+	</div>
+	<div class="clearfix"></div>
+	
 
 {% endblock %}
