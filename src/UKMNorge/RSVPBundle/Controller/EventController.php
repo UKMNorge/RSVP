@@ -79,22 +79,37 @@ class EventController extends Controller
             var_dump($response);
             throw new Exception('Noe mangler...', 20001);
         }
-        if ($response != 'yes' && $response != 'no' && $response != 'maybe') {
-            throw new Exception('Svar må enten være ja, nei eller kanskje, på engelsk.', 20002);
+        if ($response == 'yes' && $response == 'no' && $response == 'maybe') {
+            $resRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Response');
+            if ($res = $resRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
+                $res->setStatus($response);
+            }
+            else {
+                $res = new Response();
+                $res->setEvent($event);
+                $res->setUser($user->getDeltaId());
+                $res->setStatus($response);
+                $em->persist($res);
+            }
         }
-
-        $resRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Response');
-        if ($res = $resRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId()))) {
-            $res->setStatus($response);
+        else if ($response == 'wait' && $response == 'donotwait') {
+            $waitRepo = $this->get('doctrine')->getRepository('UKMRSVPBundle:Waiting');
+            if ($wait = $waitRepo->findOneBy(array('event' => $event, 'user' => $user->getDeltaId() ))) {
+                // Brukeren står på venteliste, fjern h*n
+                $em->remove($wait);
+            }
+            else {
+                // Legg til brukeren på venteliste
+                $wait = new Waiting();
+                $wait = setEvent($event);
+                $wait = setUser($user->getDeltaId());
+                $em->persist($wait);
+            }
         }
         else {
-            $res = new Response();
-            $res->setEvent($event);
-            $res->setUser($user->getDeltaId());
-            $res->setStatus($response);
+            throw new Exception('Svar må enten være ja, nei, kanskje, vent eller ikke vent på engelsk.', 20002);
         }
-
-        $em->persist($res);
+       
         $em->flush();
 
         $route_data['id'] = $id;
