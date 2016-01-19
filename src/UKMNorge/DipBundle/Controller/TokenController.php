@@ -135,7 +135,7 @@ class TokenController extends Controller
     					// Hvis token ikke er autentisert enda
     					// Fjern lagret token
     					$session->invalidate();
-                        throw new Exception('Token not authenticated');
+                        #throw new Exception('Token not authenticated');
                         return $this->redirect($this->get('router')->generate('ukm_dip_login'));
     					// return $this->render('UKMDipBundle:Default:index.html.twig', array('name' => 'Token not authorized'));
     					//TODO: Redirect til Delta-innlogging
@@ -147,7 +147,7 @@ class TokenController extends Controller
                 // Denne burde ikke dukke opp!
                 $session->invalidate();
 
-                error_log('REDIR-loop?');
+                #error_log('REDIR-loop?');
                 $forsok = $request->request->get('forsok');
                 if( $forsok && is_numeric( $forsok ) ) {
                 	$forsok++;
@@ -155,7 +155,7 @@ class TokenController extends Controller
                 	$forsok = 1;
                 }
 
-                throw new Exception('Token does not exist in DB');
+                #throw new Exception('Token does not exist in DB');
                 return $this->redirect($this->get('router')->generate('ukm_dip_login').'?forsok='.$forsok);
     			// return $this->render('UKMDipBundle:Default:index.html.twig', array('name' => 'Token does not exist'));
     		}
