@@ -145,7 +145,14 @@ class TokenController extends Controller
     			// Genererer ny og last inn siden på nytt?
                 // Denne burde ikke dukke opp!
                 $session->invalidate();
-                return $this->redirect($this->get('router')->generate('ukm_dip_login'));
+                error_log('REDIR-loop?');
+                $forsok = $request->request->get('forsok');
+                if( $forsok && is_numeric( $forsok ) ) {
+                	$forsok++;
+                } else {
+                	$forsok = 1;
+                }
+                return $this->redirect($this->get('router')->generate('ukm_dip_login').'?forsok='.$forsok);
     			// return $this->render('UKMDipBundle:Default:index.html.twig', array('name' => 'Token does not exist'));
     		}
     	}
