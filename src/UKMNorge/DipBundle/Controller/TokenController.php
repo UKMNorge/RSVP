@@ -44,13 +44,15 @@ class TokenController extends Controller
     	// Her sjekker vi om brukeren har en session med en autentisert token, 
     	// og hvis ikke genererer vi en og sender brukeren videre til Delta.
 
+        $session = $this->get('session');
+
         // Registrer hvilken side brukeren var på i en session-variabel
         // Om lokal side vil kan de sende brukeren tilbake til den siden når brukeren kommer tilbake fra Delta.
         $previous = $request->headers->get('referer');
         if($previous) {
             $uri = parse_url($previous);
             if ($uri['host'] == ($this->getParameter('dip_location').'.'.$this->getParameter('UKM_HOSTNAME'))) {
-                $session = $request->getSession();
+                #$session = $request->getSession();
                 $session->set('referer', $uri['path']);
             }
             // var_dump($uri);
@@ -71,7 +73,6 @@ class TokenController extends Controller
 
 
     	// Har brukeren en session med token?
-    	$session = $this->get('session');
     	if ($session->isStarted()) {
     		$token = $session->get('token');
     		if ($token) {

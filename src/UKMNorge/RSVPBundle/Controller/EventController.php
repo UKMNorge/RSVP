@@ -19,6 +19,8 @@ class EventController extends Controller
             return $this->redirect($referer);
         }
 
+        
+
 
 		$view_data = array();
     	$eventServ = $this->get('ukmrsvp.event');
