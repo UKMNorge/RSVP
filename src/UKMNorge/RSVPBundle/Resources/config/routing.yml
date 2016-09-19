@@ -13,3 +13,7 @@ ukmrsvp_event_response:
 ukmrsvp_test:
     path: /test/
     defaults: { _controller: UKMRSVPBundle:Event:test }
+
+ukmrsvpapi_test:
+    path: /api/events/all/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:all }
