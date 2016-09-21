@@ -70,6 +70,9 @@ class Event
      */
     private $date_stop;
 
+    public function expose() {
+        return get_object_vars($this);
+    }
     /**
      * Get id
      *

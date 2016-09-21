@@ -19,13 +19,28 @@ class EventAPIController extends Controller {
 		$response = new stdClass();
 		try {
 			$access = $this->getAccessFromRequest($request);	
-			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Ikke implementert enda. Ta kontakt med support.';
+			#$response->success = false;
+			#$response->errors[] = 'UKMRSVPBundle:EventAPIController: Ikke implementert enda. Ta kontakt med support.';
+
+			if($access->got('readEvents')) {
+				$response->success = true;
+				$allEvents = $this->get('ukmrsvp.event')->getAll();
+				$events = [];
+				foreach($allEvents as $event) {
+					$events[] = $event->expose();
+				}
+				$response->data = $events;
+			}
+			else {
+				$response->success = false;
+				$response->errors = $access->errors();
+				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å lese events. Krever 'readEvents'-tilgangen.";
+			}
 			return new JsonResponse($response);
 		}
 		catch (Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support.';
+			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
 			return new JsonResponse($response);
 		}
 		
@@ -33,14 +48,16 @@ class EventAPIController extends Controller {
 
 	private function getAccessFromRequest($request) {
 		try {
-			$this->access = new Access($request->query->get('API_KEY'), $this->getParameter('ukmapi.api_key'), $this->getParameter('ukmapi.api_secret'));
 			if($request->getMethod() == 'GET') {
+				$this->access = new Access($request->query->get('API_KEY'), $this->getParameter('ukmapi.api_key'), $this->getParameter('ukmapi.api_secret'));
 				$this->access->validate($request->query->all());
+			} 
+			else {
+				$this->access = new Access($request->request->get('API_KEY'), $this->getParameter('ukmapi.api_key'), $this->getParameter('ukmapi.api_secret'));
+				$this->access->validate($request->request->all());
 			}
-			if(!$this->access->got('readEvents')) {
-				#throw new JsonException();
-				return false;
-			}
+			
+			return $this->access;
 		}
 		catch(Exception $e) {
 			throw new Exception('Die');
