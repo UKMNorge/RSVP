@@ -1,5 +1,9 @@
 <?php
 namespace UKMNorge\RSVPBundle\Services;
+
+use DateTime;
+use Event;
+
 class EventService {
 	
 	var $container;
@@ -11,6 +15,18 @@ class EventService {
 		$this->repo 	= $this->doctrine->getRepository('UKMRSVPBundle:Event');
 		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
 		$this->router 	= $router;
+	}
+
+	// TODO: Fix
+	public function create($name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
+		$event = new Event();
+		#$event->set
+	}
+
+	public function save(Event $event) {
+		$this->em->persist($event);
+		$this->em->flush();
+		return true;
 	}
 	
 	public function get( $id ) {
