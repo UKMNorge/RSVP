@@ -17,3 +17,11 @@ ukmrsvp_test:
 ukmrsvpapi_test:
     path: /api/events/all/
     defaults: { _controller: UKMRSVPBundle:EventAPI:all }
+
+ukmrsvpapi_owner:
+    path: /api/events/owner/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:owner }
+
+ukmrsvpapi_new:
+    path: /api/events/new/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:new }

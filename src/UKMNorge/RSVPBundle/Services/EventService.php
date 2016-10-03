@@ -2,7 +2,7 @@
 namespace UKMNorge\RSVPBundle\Services;
 
 use DateTime;
-use Event;
+use UKMNorge\RSVPBundle\Entity\Event;
 
 class EventService {
 	
@@ -20,7 +20,17 @@ class EventService {
 	// TODO: Fix
 	public function create($name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
 		$event = new Event();
-		#$event->set
+		$event->setName($name)
+			->setPlace($place)
+			->setOwner($owner)
+			->setSpots($spots)
+			->setImage($image)
+			->setDateStart($date_start)
+			->setDateStop($date_stop)
+			->setDescription($description);
+		$this->save($event);
+
+		return $event;
 	}
 
 	public function save(Event $event) {
@@ -31,6 +41,10 @@ class EventService {
 	
 	public function get( $id ) {
 		return $this->repo->findOneById( $id );
+	}
+
+	public function getByOwner($owner) {
+		return $this->repo->findBy(array('owner' => $owner));
 	}
 	
 	public function getAll() {
