@@ -80,6 +80,41 @@ class EventAPIController extends Controller {
 		}
 	}
 
+	public function editAction(Request $request) {
+		$response = new stdClass();
+		try {
+			$access = $this->getAccessFromRequest($request);
+
+			if($access->got('createEvents')) {
+				$id = $request->request->get('event_id');
+				$name = $request->request->get('name');
+				$place = $request->request->get('place');
+				$owner = $request->request->get('owner');
+				$spots = $request->request->get('spots');
+				$image = $request->request->get('image');
+				$date_start = $request->request->get('date_start');
+				$start = new DateTime($date_start);
+				$date_stop = $request->request->get('date_stop');
+				$stop = new DateTime($date_stop);
+				$description = $request->request->get('description');
+				
+				$event = $this->get('ukmrsvp.event')->edit($id, $name, $place, $owner, $spots, $image, $start, $stop, $description);
+				$response->success = true;
+			}
+			else {
+				$response->success = false;
+				$response->errors = $access->errors();
+				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å opprette events. Krever 'createEvents'-tilgangen. Kontakt support om du mener dette er feil";
+			}
+			return new JsonResponse($response);
+		}
+		catch (Exception $e) {
+			$response->success = false;
+			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			return new JsonResponse($response);
+		}
+	}
+
 	public function ownerAction(Request $request) {
 		$response = new stdClass();
 		#$this->get('logger')->info('UKMRSVPBundle: Matched ownerAction: '.var_export($request, true));

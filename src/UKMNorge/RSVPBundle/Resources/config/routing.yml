@@ -25,3 +25,7 @@ ukmrsvpapi_owner:
 ukmrsvpapi_new:
     path: /api/events/new/
     defaults: { _controller: UKMRSVPBundle:EventAPI:new }
+
+ukmrsvpapi_edit:
+    path: /api/events/edit/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:edit }

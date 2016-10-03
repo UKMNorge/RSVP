@@ -17,9 +17,24 @@ class EventService {
 		$this->router 	= $router;
 	}
 
-	// TODO: Fix
 	public function create($name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
 		$event = new Event();
+		$event->setName($name)
+			->setPlace($place)
+			->setOwner($owner)
+			->setSpots($spots)
+			->setImage($image)
+			->setDateStart($date_start)
+			->setDateStop($date_stop)
+			->setDescription($description);
+		$this->save($event);
+
+		return $event;
+	}
+
+	public function edit($id, $name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
+		$event = $this->get($id);
+
 		$event->setName($name)
 			->setPlace($place)
 			->setOwner($owner)
