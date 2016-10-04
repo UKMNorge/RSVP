@@ -105,7 +105,37 @@ class EventService {
 		}
 		return $attending;
 	}
+
+	public function getWaiting($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$attending = array();
+		$list = $this->responseRepo->findBy(array('event'=>$event, 'status' => 'maybe'));
+		foreach ($list as $item) {
+			$attending[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $attending;
+	}
 	
+	public function getNotComing($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$attending = array();
+		$list = $this->responseRepo->findBy(array('event'=>$event, 'status' => 'no'));
+		foreach ($list as $item) {
+			$attending[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $attending;
+	}
+
+	public function getAllParticipants($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$people = array();
+		$list = $this->responseRepo->findBy(array('event' => $event));
+		foreach ($list as $item) {
+			$people[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $people;
+	}
+
 	public function getSpotsTaken( $event ) {
 		return $this->getStatusCountYes( $event );
 	}

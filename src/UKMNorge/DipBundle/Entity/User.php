@@ -5,6 +5,8 @@ namespace UKMNorge\DipBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use stdClass;
+
 /**
  * User
  *
@@ -113,6 +115,25 @@ class User implements UserInterface
      *
      */
     protected $gender;
+
+
+    ### Returns an object with all variables we want to allow sending off-site.
+    public function expose() {
+        $u = new stdClass();
+        $u->id = $this->getId();
+        $u->delta_id = $this->getDeltaId();
+        $u->first_name = $this->getFirstName();
+        $u->last_name = $this->getLastName();
+        $u->email = $this->getEmail();
+        $u->post_number = $this->getPostNumber();
+        $u->post_place = $this->getPostPlace();
+        $u->phone = $this->getPhone();
+        $u->birthdate = $this->getBirthdate();
+        $u->facebook_id = $this->getFacebookId();
+        $u->gender = $this->getGender();
+
+        return $u;
+    }
 
     /**
      * Get id
