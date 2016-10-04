@@ -28,6 +28,8 @@ class EventAPIController extends Controller {
 				$allEvents = $this->get('ukmrsvp.event')->getAll();
 				$events = [];
 				foreach($allEvents as $event) {
+					// TODO: Move URL into event.
+					$event->url = 'http://rsvp.ukm.no/'.$event->getId().'-'.urlencode($event->getName());
 					$events[] = $event->expose();
 				}
 				$response->data = $events;
@@ -128,7 +130,8 @@ class EventAPIController extends Controller {
 				$eventList = $this->get('ukmrsvp.event')->getByOwner($owner);
 				#$this->get('logger')->info('UKMRSVPBundle: OwnerAction: '.var_export($eventList, true));
 				foreach($eventList as $event) {
-					$event->url = urlencode('http://rsvp.ukm.no/'.$event->getId().'-'.$event->getName());
+					// TODO: Move URL into event.
+					$event->url = 'http://rsvp.ukm.no/'.$event->getId().'-'.urlencode($event->getName());
 					$events[] = $event->expose();
 				}
 				$response->data = $events;
