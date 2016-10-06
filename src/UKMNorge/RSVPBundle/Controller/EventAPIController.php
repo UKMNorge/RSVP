@@ -165,7 +165,8 @@ class EventAPIController extends Controller {
 			return $this->access;
 		}
 		catch(Exception $e) {
-			throw new Exception('Klarte ikke å validere spørringen - er APIBundle installert?');
+			$this->get('logger')->error('UKMRSVP:EventAPIController: Access kastet følgende feilmelding: '.$e->getMessage());
+			throw new Exception('Klarte ikke å validere spørringen - er APIBundle installert? Feilmelding: '. $e->getMessage());
 		}
 	}
 
