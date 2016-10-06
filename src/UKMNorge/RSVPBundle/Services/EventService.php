@@ -1,5 +1,9 @@
 <?php
 namespace UKMNorge\RSVPBundle\Services;
+
+use DateTime;
+use UKMNorge\RSVPBundle\Entity\Event;
+
 class EventService {
 	
 	var $container;
@@ -12,9 +16,50 @@ class EventService {
 		$this->responseRepo = $this->doctrine->getRepository('UKMRSVPBundle:Response');
 		$this->router 	= $router;
 	}
+
+	public function create($name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
+		$event = new Event();
+		$event->setName($name)
+			->setPlace($place)
+			->setOwner($owner)
+			->setSpots($spots)
+			->setImage($image)
+			->setDateStart($date_start)
+			->setDateStop($date_stop)
+			->setDescription($description);
+		$this->save($event);
+
+		return $event;
+	}
+
+	public function edit($id, $name, $place, $owner, $spots, $image, DateTime $date_start, DateTime $date_stop, $description) {
+		$event = $this->get($id);
+
+		$event->setName($name)
+			->setPlace($place)
+			->setOwner($owner)
+			->setSpots($spots)
+			->setImage($image)
+			->setDateStart($date_start)
+			->setDateStop($date_stop)
+			->setDescription($description);
+		$this->save($event);
+
+		return $event;
+	}
+
+	public function save(Event $event) {
+		$this->em->persist($event);
+		$this->em->flush();
+		return true;
+	}
 	
 	public function get( $id ) {
 		return $this->repo->findOneById( $id );
+	}
+
+	public function getByOwner($owner) {
+		return $this->repo->findBy(array('owner' => $owner));
 	}
 	
 	public function getAll() {
@@ -60,7 +105,37 @@ class EventService {
 		}
 		return $attending;
 	}
+
+	public function getWaiting($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$attending = array();
+		$list = $this->responseRepo->findBy(array('event'=>$event, 'status' => 'maybe'));
+		foreach ($list as $item) {
+			$attending[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $attending;
+	}
 	
+	public function getNotComing($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$attending = array();
+		$list = $this->responseRepo->findBy(array('event'=>$event, 'status' => 'no'));
+		foreach ($list as $item) {
+			$attending[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $attending;
+	}
+
+	public function getAllParticipants($event) {
+		$userProvider = $this->container->get('dipb_user_provider');
+		$people = array();
+		$list = $this->responseRepo->findBy(array('event' => $event));
+		foreach ($list as $item) {
+			$people[] = $userProvider->loadUserByUsername($item->getUser());
+		}
+		return $people;
+	}
+
 	public function getSpotsTaken( $event ) {
 		return $this->getStatusCountYes( $event );
 	}

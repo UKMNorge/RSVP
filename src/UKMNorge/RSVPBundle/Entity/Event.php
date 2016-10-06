@@ -29,6 +29,12 @@ class Event
     private $name;
 
     /**
+     * 
+     * @ORM\Column(name="owner", type="string", length=50)
+     */
+    private $owner;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="Place", type="string", length=255, nullable=true)
@@ -70,6 +76,9 @@ class Event
      */
     private $date_stop;
 
+    public function expose() {
+        return get_object_vars($this);
+    }
     /**
      * Get id
      *
@@ -270,5 +279,29 @@ class Event
     public function getDateStop()
     {
         return $this->date_stop;
+    }
+
+    /**
+     * Gets the value of owner.
+     *
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Sets the value of owner.
+     *
+     * @param mixed $owner the owner
+     *
+     * @return self
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }

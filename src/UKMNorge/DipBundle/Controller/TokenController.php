@@ -126,10 +126,14 @@ class TokenController extends Controller
 				        $event = new InteractiveLoginEvent($request, $token);
 				        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-				        // Redirect til en side bak firewall i stedet
+                        // Har vi en referer-side?
+                        $referer = $session->get('referer');
+                        $this->get('logger')->debug('UKMDipBundle: Referer: '.$referer);
+                        if($referer != null) {
+                            return $this->redirect($referer);
+                        }
+				        // Hvis ikke, redirect til en side bak firewall i stedet
 				        return $this->redirect($this->generateUrl($entry_point));
-				        #return $this->redirectToRoute('ukm_amb_profile_homepage');
-    					#return $this->render('UKMDipBundle:Default:index.html.twig', array('name' => 'Logged in successfully!'));
     				}
     				else {
     					// Hvis token ikke er autentisert enda

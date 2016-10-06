@@ -13,3 +13,31 @@ ukmrsvp_event_response:
 ukmrsvp_test:
     path: /test/
     defaults: { _controller: UKMRSVPBundle:Event:test }
+
+ukmrsvpapi_test:
+    path: /api/events/all/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:all }
+
+ukmrsvpapi_owner:
+    path: /api/events/owner/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:owner }
+
+ukmrsvpapi_new:
+    path: /api/events/new/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:new }
+
+ukmrsvpapi_edit:
+    path: /api/events/edit/
+    defaults: { _controller: UKMRSVPBundle:EventAPI:edit }
+
+ukmrsvpapi_attending:
+    path: /api/participants/attending/
+    defaults: { _controller: UKMRSVPBundle:ParticipantAPI:attending }
+
+ukmrsvpapi_waiting:
+    path: /api/participants/waiting/
+    defaults: { _controller: UKMRSVPBundle:ParticipantAPI:waiting }
+
+ukmrsvpapi_notcoming:
+    path: /api/participants/notcoming/
+    defaults: { _controller: UKMRSVPBundle:ParticipantAPI:notComing }

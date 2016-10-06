@@ -27,7 +27,7 @@ class Response
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="event")
+     * @ORM\ManyToOne(targetEntity="Event")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     private $event;
