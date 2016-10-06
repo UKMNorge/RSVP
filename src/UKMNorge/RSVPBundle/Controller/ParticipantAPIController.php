@@ -16,6 +16,38 @@ use UKMNorge\APIBundle\Util\Access;
 
 class ParticipantAPIController extends Controller {
 
+	public function allAttendingForOwnerAction(Request $request) {
+		$access = $this->getAccessFromRequest($request);
+
+		$response = new stdClass();
+		try {
+			if($access->got('readParticipants')) {
+				$response->success = true;
+				$owner = $request->request->get('owner');
+				$events = $this->get('ukmrsvp.event')->getByOwner($owner);
+				$this->get('logger')->debug('UKMRSVPBundle:ParticipantAPIController:allAttendingForOwnerAction: Events: '.var_export($events, true));
+				$participants = array();
+				foreach($events as $event) {
+					$e_participants = $this->get('ukmrsvp.event')->getAttending($event);
+					$participants = array_merge($participants, $e_participants);
+				}
+				$response->data = $participants;
+				$this->get('logger')->debug('UKMRSVPBundle:ParticipantAPIController:allAttendingForOwnerAction: Response-data: '.var_export($response->data, true));
+				return new JsonResponse($response);
+			}
+			else {
+				$response->success = false;
+				$response->errors = $access->errors();
+				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+			}
+		}
+		catch(Exception $e) {
+			$response->success = false;
+			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			return new JsonResponse($response);
+		}		
+	}
+
 	public function attendingAction(Request $request) {
 		$access = $this->getAccessFromRequest($request);
 		$response = new stdClass();

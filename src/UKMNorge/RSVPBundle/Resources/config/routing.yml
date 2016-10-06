@@ -41,3 +41,7 @@ ukmrsvpapi_waiting:
 ukmrsvpapi_notcoming:
     path: /api/participants/notcoming/
     defaults: { _controller: UKMRSVPBundle:ParticipantAPI:notComing }
+
+ukmrsvpapi_allforowner:
+    path: /api/participants/allForOwner/
+    defaults: { _controller: UKMRSVPBundle:ParticipantAPI:allAttendingForOwner }
