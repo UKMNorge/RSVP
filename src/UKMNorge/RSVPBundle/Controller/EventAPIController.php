@@ -130,7 +130,7 @@ class EventAPIController extends Controller {
 				$eventList = $this->get('ukmrsvp.event')->getByOwner($owner);
 				#$this->get('logger')->info('UKMRSVPBundle: OwnerAction: '.var_export($eventList, true));
 				foreach($eventList as $event) {
-					$this->get('logger')->debug('UKMRSVPBundle: Event-export: '.var_export($event));
+					$this->get('logger')->debug('UKMRSVPBundle: Event-export: '.var_export($event, true));
 					// TODO: Move URL into event.
 					$event->url = 'http://rsvp.ukm.no/'.$event->getId().'-'.urlencode($event->getName());
 					$events[] = $event->expose();
