@@ -150,7 +150,7 @@ class ParticipantAPIController extends Controller {
 			return $this->access;
 		}
 		catch(Exception $e) {
-			throw new Exception('Die');
+			throw new Exception('Klarte ikke å validere spørringen - er APIBundle installert?');
 		}
 	}
 }
