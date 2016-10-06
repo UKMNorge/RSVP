@@ -1,5 +1,14 @@
 {% extends "UKMRSVPBundle::layout.html.twig" %}
 
+{% block css %}
+	{{ parent() }}
+	<style>
+		.eventHeader:after {
+			background: url('{{ eventServ.getImage(event) }}') no-repeat center center;
+		}
+	</style>
+{% endblock %}
+
 {% block content %}
 	<div class="col-xs-12 eventHeader">
 		<div class="data">

@@ -82,6 +82,10 @@ class EventService {
 		return $event->getPlace();
 	}
 	
+	public function getImage($event) {
+		return $event->getImage();
+	}
+
 	public function isOpen( $event ) {
 		if($event->getSpots() == 0)
 			return true;
@@ -95,7 +99,7 @@ class EventService {
 	public function getSpotsAvailable( $event ) {
 		// 0 spots = ingen begrensning
 		if($event->getSpots() == 0)
-			return 0;
+			return true;
 		
 		$spots = $this->getSpots( $event );
 		$taken = $this->getSpotsTaken( $event );
