@@ -27,3 +27,11 @@ parameters:
     ukmsms.system_id: UKMRSVP
     ukmsms.price: 0.4
     ukmsms.sender: UKMNorge
+
+    ukm_dip.location: ~
+    ukm_dip.firewall_area: secure_area
+    ukm_dip.entry_point: ~
+    ukm_dip.api_key: ~
+    ukm_dip.api_secret: ~
+    ukm_dip.token_salt: ~
+    ukm_dip.user_class: AppBundle\Entity\User 

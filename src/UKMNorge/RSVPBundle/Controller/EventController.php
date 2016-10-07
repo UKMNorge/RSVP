@@ -48,6 +48,9 @@ class EventController extends Controller
 		// Hva er brukerens svar?
 		if( $logged_in ) {
 			$user = $this->get('security.token_storage')->getToken()->getUser();
+            $user = $this->get('dipb_user_provider')->loadUserByUsername($user);
+            
+            $this->get('logger')->debug('RSVPBundle: User: '.var_export($user, true));
 			$view_data['my_user'] = $user;
 			
 			$responseServ = $this->get('ukmrsvp.response');
@@ -82,6 +85,7 @@ class EventController extends Controller
 
         $event = $eventServ->get($id);
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('dipb_user_provider')->loadUserByUsername($user);
 
         // Sjekk at ingenting er null
         if(!$event || !$user || !$response) {
@@ -111,6 +115,7 @@ class EventController extends Controller
         $em = $this->get('doctrine')->getManager();
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('dipb_user_provider')->loadUserByUsername($user);
         $event = $eventServ->get($id);
         
     }

@@ -16,6 +16,12 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "url": "https://github.com/UKMNorge/UKMDipBundle.git",
+            "type": "git"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "symfony/symfony": "3.0.*",
@@ -27,7 +33,8 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "symfony/assetic-bundle": "^2.7"
+        "symfony/assetic-bundle": "^2.7",
+        "ukmnorge/ukmdipbundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -19,7 +19,9 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new UKMNorge\DesignBundle\UKMDesignBundle(),
             new UKMNorge\RSVPBundle\UKMRSVPBundle(),
-            new UKMNorge\DipBundle\UKMDipBundle(),
+            #new UKMNorge\DipBundle\UKMDipBundle(),
+            new UKMNorge\UKMDipBundle\UKMDipBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new UKMNorge\SMSBundle\UKMSMSBundle(),
             new UKMNorge\APIBundle\UKMAPIBundle()
         ];
