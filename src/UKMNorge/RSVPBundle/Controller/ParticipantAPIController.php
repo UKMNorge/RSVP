@@ -38,12 +38,13 @@ class ParticipantAPIController extends Controller {
 			else {
 				$response->success = false;
 				$response->errors = $access->errors();
-				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+				$response->errors[] = "UKMRSVPBundle:ParticipantAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
 			}
 		}
 		catch(Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$response->errors[] = 'UKMRSVPBundle:ParticipantAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$this->get('logger')->error('UKMRSVPBundle:ParticipantAPIController:allAttendingForOwnerAction: Det oppsto en feil: '.$e->getMessage());
 			return new JsonResponse($response);
 		}		
 	}
@@ -67,13 +68,14 @@ class ParticipantAPIController extends Controller {
 			else {
 				$response->success = false;
 				$response->errors = $access->errors();
-				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+				$response->errors[] = "UKMRSVPBundle:ParticipantAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
 			}
 			return new JsonResponse($response);
 		}
 		catch(Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$response->errors[] = 'UKMRSVPBundle:ParticipantAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$this->get('logger')->error('UKMRSVPBundle:ParticipantAPIController:attendingAction: Det oppsto en feil: '.$e->getMessage());
 			return new JsonResponse($response);
 		}
 	}
@@ -97,13 +99,14 @@ class ParticipantAPIController extends Controller {
 			else {
 				$response->success = false;
 				$response->errors = $access->errors();
-				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+				$response->errors[] = "UKMRSVPBundle:ParticipantAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
 			}
 			return new JsonResponse($response);
 		}
 		catch(Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$response->errors[] = 'UKMRSVPBundle:ParticipantAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$this->get('logger')->error('UKMRSVPBundle:ParticipantAPIController:waitingAction: Det oppsto en feil: '.$e->getMessage());
 			return new JsonResponse($response);
 		}
 	}
@@ -127,13 +130,14 @@ class ParticipantAPIController extends Controller {
 			else {
 				$response->success = false;
 				$response->errors = $access->errors();
-				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+				$response->errors[] = "UKMRSVPBundle:ParticipantAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
 			}
 			return new JsonResponse($response);
 		}
 		catch(Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$response->errors[] = 'UKMRSVPBundle:ParticipantAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$this->get('logger')->error('UKMRSVPBundle:ParticipantAPIController:notComingAction: Det oppsto en feil: '.$e->getMessage());
 			return new JsonResponse($response);
 		}
 	}
@@ -157,13 +161,14 @@ class ParticipantAPIController extends Controller {
 			else {
 				$response->success = false;
 				$response->errors = $access->errors();
-				$response->errors[] = "UKMRSVPBundle:EventAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
+				$response->errors[] = "UKMRSVPBundle:ParticipantAPIController: Du har ikke tilgang til å hente ut deltakere. Krever 'readParticipants'-tilgangen.";
 			}
 			return new JsonResponse($response);
 		}
 		catch(Exception $e) {
 			$response->success = false;
-			$response->errors[] = 'UKMRSVPBundle:EventAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$response->errors[] = 'UKMRSVPBundle:ParticipantAPIController: Det oppsto en ukjent feil. Ta kontakt med support. Feilmelding: '.$e->getMessage();
+			$this->get('logger')->error('UKMRSVPBundle:ParticipantAPIController:allAction: Det oppsto en feil: '.$e->getMessage());
 			return new JsonResponse($response);
 		}
 	}
