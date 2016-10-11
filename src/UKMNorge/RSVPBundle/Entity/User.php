@@ -93,6 +93,11 @@ class User extends BaseUser
         return $u;
     }
 
+    public function setData($data) {
+        $this->setPhone($data->phone);
+        
+    }
+
     /**
      * Set phone
      *
