@@ -777,31 +777,32 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "962a7f3603cce63dae2a84839f030ddb748d890b"
+                "reference": "2aa96fa9a384f6f0f26342e425e57f68fcff16c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/962a7f3603cce63dae2a84839f030ddb748d890b",
-                "reference": "962a7f3603cce63dae2a84839f030ddb748d890b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/2aa96fa9a384f6f0f26342e425e57f68fcff16c6",
+                "reference": "2aa96fa9a384f6f0f26342e425e57f68fcff16c6",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.9 || ^7.0",
-                "symfony/form": "^2.3 || ^3.0",
-                "symfony/framework-bundle": "^2.3 || ^3.0",
-                "symfony/security-bundle": "^2.3 || ^3.0",
-                "symfony/twig-bundle": "^2.3 || ^3.0"
+                "symfony/form": "^2.7 || ^3.0",
+                "symfony/framework-bundle": "^2.7 || ^3.0",
+                "symfony/security-bundle": "^2.7 || ^3.0",
+                "symfony/twig-bundle": "^2.7 || ^3.0"
             },
             "conflict": {
-                "symfony/doctrine-bridge": "<2.3"
+                "symfony/doctrine-bridge": "<2.7"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "^1.3",
+                "phpunit/phpunit": "~4.8|~5.0",
                 "swiftmailer/swiftmailer": "^4.3 || ^5.0",
-                "symfony/console": "^2.3 || ^3.0",
+                "symfony/console": "^2.7 || ^3.0",
                 "symfony/phpunit-bridge": "^2.7 || ^3.0",
-                "symfony/validator": "^2.3 || ^3.0",
-                "symfony/yaml": "^2.3 || ^3.0",
+                "symfony/validator": "^2.7 || ^3.0",
+                "symfony/yaml": "^2.7 || ^3.0",
                 "willdurand/propel-typehintable-behavior": "^1.0"
             },
             "suggest": {
@@ -844,7 +845,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-10-07 07:55:07"
+            "time": "2016-10-11 10:19:11"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2054,7 +2055,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/UKMNorge/UKMDipBundle.git",
-                "reference": "511116ba5f36872a1b0321e5a3915aa05214eaae"
+                "reference": "2b69b6aa69c554fbe9eda066248a634ddff914f9"
             },
             "type": "library",
             "autoload": {
@@ -2071,7 +2072,7 @@
             ],
             "description": "Simple authentication for UKM services",
             "homepage": "http://github.com/UKMNorge/UKMDipBundle",
-            "time": "2016-10-07 09:24:53"
+            "time": "2016-10-11 11:47:43"
         }
     ],
     "packages-dev": [
