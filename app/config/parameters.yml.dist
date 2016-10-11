@@ -34,4 +34,6 @@ parameters:
     ukm_dip.api_key: ~
     ukm_dip.api_secret: ~
     ukm_dip.token_salt: ~
-    ukm_dip.user_class: AppBundle\Entity\User 
+    ukm_dip.user_class: AppBundle\Entity\User
+    ukmapi.api_key: rsvp
+    ukmapi.api_secret: ~
