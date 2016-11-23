@@ -35,7 +35,8 @@ class Access implements AccessInterface {
 	// CURLer UKMno for å sjekke om spørrende system har rettigheten den spør om til dette systemet.
 	public function got($permission) {
 		$curl = new UKMCURL();
-		if(false) // TODO: FIX UKM_HOSTNAME FOR THIS CHECK!
+		require_once('UKMconfig.inc.php');
+		if(UKM_HOSTNAME == 'ukm.dev')
 			$url = 'http://api.ukm.dev/ekstern:v1/signedTilgang2';
 		else
 			$url = 'http://api.ukm.no/ekstern:v1/signedTilgang2';
