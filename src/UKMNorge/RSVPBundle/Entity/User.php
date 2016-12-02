@@ -95,7 +95,7 @@ class User extends BaseUser
 
     public function setData($data) {
         $this->setPhone($data->phone);
-        
+        $this->setFacebookId($data->facebook_id);
     }
 
     /**
