@@ -33,6 +33,9 @@ framework:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        # Fix IE-session-bug.
+        cookie_domain: "rsvp.%UKM_HOSTNAME%"
+        name: "SFrsvp"
     fragments:       ~
     http_method_override: true
     assets: ~
