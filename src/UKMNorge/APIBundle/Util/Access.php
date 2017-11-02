@@ -39,7 +39,7 @@ class Access implements AccessInterface {
 		if(UKM_HOSTNAME == 'ukm.dev')
 			$url = 'http://api.ukm.dev/ekstern:v1/signedTilgang2';
 		else
-			$url = 'http://api.ukm.no/ekstern:v1/signedTilgang2';
+			$url = 'https://api.ukm.no/ekstern:v1/signedTilgang2';
 
 		$this->time = time();
 
