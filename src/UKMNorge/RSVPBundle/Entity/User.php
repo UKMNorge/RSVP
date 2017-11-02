@@ -358,6 +358,6 @@ class User extends BaseUser
    	}
    	
    	public function getLink() {
-	   	return '//facebook.com/profile.php?id='.$this->getFacebookId();
+	   	return '//facebook.com/'.$this->getFacebookId();
     }
 }
