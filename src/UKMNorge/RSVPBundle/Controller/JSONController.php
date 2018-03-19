@@ -24,4 +24,18 @@ class JSONController extends Controller
 
 		return new JsonResponse( $eventData );
 	}
+	
+	public function placeAction( $pl_id )
+	{
+		$eventServ = $this->get('ukmrsvp.event');
+		
+		$eventData = [];
+		foreach( $eventServ->getAll() as $event ) {
+			if( $event->getOwner() == $pl_id ) {
+				$eventData[] = $event->expose();
+			}
+		}
+
+		return new JsonResponse( $eventData );
+	}
 }

@@ -47,6 +47,10 @@ ukmrsvpapi_allforowner:
     defaults: { _controller: UKMRSVPBundle:ParticipantAPI:allAttendingForOwner }
     
 
-ukmrsvp_json_homepage:
+ukmrsvp_json_events:
     path:     /api/events/all/json/
     defaults: { _controller: UKMRSVPBundle:JSON:list }
+
+ukmrsvp_json_place:
+    path:     /api/events/place-{pl_id}/json/
+    defaults: { _controller: UKMRSVPBundle:JSON:place }
