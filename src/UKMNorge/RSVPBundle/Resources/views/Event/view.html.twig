@@ -11,122 +11,124 @@
 {% endblock %}
 
 {% block content %}
-	<div class="col-xs-12 eventHeader">
-		<div class="data">
-			<div class="pull-left">
-				<h1>{{ eventServ.getName( event ) }}</h1>
-				<p>{{ eventServ.getPlace( event ) }}</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 eventHeader">
+				<div class="data">
+					<div class="pull-left">
+						<h1>{{ eventServ.getName( event ) }}</h1>
+						<p>{{ eventServ.getPlace( event ) }}</p>
+					</div>
+					<div class="pull-right dateIcon">
+						<h1>{{ eventServ.getDateStart( event ).date|dato('d') }}</h1>
+						<h3>{{ eventServ.getDateStart( event).date|dato('M') }}</h3>
+					</div>
+					<div class="clearfix"></div>
+				</div>
 			</div>
-			<div class="pull-right dateIcon">
-				<h1>{{ eventServ.getDateStart( event ).date|dato('d') }}</h1>
-				<h3>{{ eventServ.getDateStart( event).date|dato('M') }}</h3>
+			<div class="clearfix"></div>
+			{% if not eventServ.isOpen( event ) %}
+				<div class="col-xs-12 eventStatus alert alert-danger">
+					Hendelsen er ikke åpen for påmelding, men du kan sette deg på venteliste
+				</div>
+			{% else %}
+				<div class="col-xs-12 eventStatus alert alert-info">
+					{% if eventServ.getSpots( event ) == 0 %}
+						Ingen plassbegrensning.
+					{% else %}
+						{{ eventServ.getSpotsAvailable( event ) }} plasser tilgjengelig
+					{% endif %}
+				</div>	
+			{% endif %}
+			
+			<div class="attendingStatus">
+				<div class="col-xs-4 center">
+					<a href="#attending">
+					<h1>{{ eventServ.getStatusCountYes( event ) }}</h1>
+					<small>kommer</small>
+					</a>
+				</div>
+				<div class="col-xs-4 center">
+					<h1>{{ eventServ.getStatusCountMaybe( event ) }}</h1>
+					<small>kanskje</small>
+				</div>
+				<div class="col-xs-4 center">
+					<h1>{{ eventServ.getStatusCountNo( event ) }}</h1>
+					<small>kommer ikke</small>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-6 pull-right center rsvp">
+				<h2>Være med?</h2>
+				{% if not logged_in %}
+					<p>Du må logge inn med din UKMID for å melde deg på. Trykk logg inn for å komme i gang</p>
+					<a href="{{ url('ukm_dip_login') }}" class="btn btn-success">Logg inn</a>
+				{% else %}
+					{% if not eventServ.isOpen( event ) and (my_response is not defined or my_response != 'yes')%}
+						<p>Hendelsen er full{% if waitingServ.getCount( my_user, event ) == 0 %}, men ingen står på venteliste. Vil du være den første på ventelisten?{% else %}, og {{ waitingServ.getCount( my_user, event ) }} står på venteliste. Vil du også stå på venteliste?{% endif %}
+						</p>
+
+						<p>
+							<a href="{{ eventServ.getUrlResponse( event, 'wait' ) }}" class="btn btn-success">
+								{{ waiting is defined and waiting ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+								Stå på venteliste (nr {{ waitingServ.getMyNumber( my_user, event ) }})
+							</a>
+						</p>
+						<p>
+							<a href="{{ eventServ.getUrlResponse( event, 'donotwait' ) }}" class="btn btn-danger">
+								{{ waiting is not defined or (waiting is defined and not waiting) ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+								Meld meg av ventelisten
+							</a>
+						</p>
+					{% else %}		
+						{% if my_response is not defined %}
+							<p><b>Du har ikke svart</b></p>
+						{% endif %}
+						<p>
+							<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
+								{{ my_response is defined and "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+								Jeg kommer
+							</a>
+						</p>
+						<p>
+							<a href="{{ eventServ.getUrlResponse( event, 'maybe' ) }}" class="btn btn-warning">
+								{{ my_response is defined and "maybe" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+								Jeg kommer kanskje
+							</a>
+						</p>
+						<p>
+							<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
+								{{ my_response is defined and "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
+								Jeg kommer ikke
+							</a>
+						</p>
+					{% endif %}
+				{% endif %}
+			</div>
+			
+
+			<div class="col-xs-12 col-sm-6 pull-left">
+				<div class="timeDetails">
+					{{ eventServ.getDateStart( event ).date|dato('d. M Y')|lower }} <b>kl.{{ eventServ.getDateStart( event ).date|dato('H:i') }}</b>
+					- 
+					{{ eventServ.getDateStop( event ).date|dato('d. M Y')|lower }} <b>kl.{{ eventServ.getDateStop( event ).date|dato('H:i') }}</b>
+			
+				</div>
+
+				{{ eventServ.getDescription( event )|raw|nl2br }}
+			</div>
+			
+			<div class="clearfix"></div>
+			<div class="col-xs-12 attendingImages">
+			<a name="attending"></a>
+				{% for attending in eventServ.getAttending( event ) %}
+					<a href="{{ attending.getLink() }}" target="_blank">
+						<img src="{{ attending.getThumbnail() }}" width="75" />
+					</a>
+				{% endfor %}
 			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
-	<div class="clearfix"></div>
-	{% if not eventServ.isOpen( event ) %}
-		<div class="col-xs-12 eventStatus alert alert-danger">
-			Hendelsen er ikke åpen for påmelding, men du kan sette deg på venteliste
-		</div>
-	{% else %}
-		<div class="col-xs-12 eventStatus alert alert-info">
-			{% if eventServ.getSpots( event ) == 0 %}
-				Ingen plassbegrensning.
-			{% else %}
-				{{ eventServ.getSpotsAvailable( event ) }} plasser tilgjengelig
-			{% endif %}
-		</div>	
-	{% endif %}
-	
-	<div class="attendingStatus">
-		<div class="col-xs-4 center">
-			<a href="#attending">
-			<h1>{{ eventServ.getStatusCountYes( event ) }}</h1>
-			<small>kommer</small>
-			</a>
-		</div>
-		<div class="col-xs-4 center">
-			<h1>{{ eventServ.getStatusCountMaybe( event ) }}</h1>
-			<small>kanskje</small>
-		</div>
-		<div class="col-xs-4 center">
-			<h1>{{ eventServ.getStatusCountNo( event ) }}</h1>
-			<small>kommer ikke</small>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-	
-	<div class="col-xs-12 col-sm-6 pull-right center rsvp">
-		<h2>Være med?</h2>
-		{% if not logged_in %}
-			<p>Du må logge inn med din UKMID for å melde deg på. Trykk logg inn for å komme i gang</p>
-			<a href="{{ url('ukm_dip_login') }}" class="btn btn-success">Logg inn</a>
-		{% else %}
-			{% if not eventServ.isOpen( event ) and (my_response is not defined or my_response != 'yes')%}
-				<p>Hendelsen er full{% if waitingServ.getCount( my_user, event ) == 0 %}, men ingen står på venteliste. Vil du være den første på ventelisten?{% else %}, og {{ waitingServ.getCount( my_user, event ) }} står på venteliste. Vil du også stå på venteliste?{% endif %}
-				</p>
-
-				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'wait' ) }}" class="btn btn-success">
-						{{ waiting is defined and waiting ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Stå på venteliste (nr {{ waitingServ.getMyNumber( my_user, event ) }})
-					</a>
-				</p>
-				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'donotwait' ) }}" class="btn btn-danger">
-						{{ waiting is not defined or (waiting is defined and not waiting) ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Meld meg av ventelisten
-					</a>
-				</p>
-			{% else %}		
-				{% if my_response is not defined %}
-					<p><b>Du har ikke svart</b></p>
-				{% endif %}
-				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'yes' ) }}" class="btn btn-success">
-						{{ my_response is defined and "yes" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Jeg kommer
-					</a>
-				</p>
-				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'maybe' ) }}" class="btn btn-warning">
-						{{ my_response is defined and "maybe" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Jeg kommer kanskje
-					</a>
-				</p>
-				<p>
-					<a href="{{ eventServ.getUrlResponse( event, 'no' ) }}" class="btn btn-danger">
-						{{ my_response is defined and "no" == my_response ? '<span class="glyphicon glyphicon-ok"></span>' : '' }}
-						Jeg kommer ikke
-					</a>
-				</p>
-			{% endif %}
-		{% endif %}
-	</div>
-	
-
-	<div class="col-xs-12 col-sm-6 pull-left">
-		<div class="timeDetails">
-			{{ eventServ.getDateStart( event ).date|dato('d. M Y')|lower }} <b>kl.{{ eventServ.getDateStart( event ).date|dato('H:i') }}</b>
-			- 
-			{{ eventServ.getDateStop( event ).date|dato('d. M Y')|lower }} <b>kl.{{ eventServ.getDateStop( event ).date|dato('H:i') }}</b>
-	
-		</div>
-
-		{{ eventServ.getDescription( event )|raw|nl2br }}
-	</div>
-	
-	<div class="clearfix"></div>
-	<div class="col-xs-12 attendingImages">
-	<a name="attending"></a>
-		{% for attending in eventServ.getAttending( event ) %}
-			<a href="{{ attending.getLink() }}" target="_blank">
-				<img src="{{ attending.getThumbnail() }}" width="75" />
-			</a>
-		{% endfor %}
-	</div>
-	<div class="clearfix"></div>
-	
-
 {% endblock %}

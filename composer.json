@@ -20,6 +20,10 @@
         {
             "url": "https://github.com/UKMNorge/UKMDipBundle.git",
             "type": "git"
+        },
+	{
+            "url": "https://github.com/UKMNorge/UKMresponsive.git",
+            "type": "git"
         }
     ],
     "require": {
@@ -35,6 +39,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/assetic-bundle": "^2.7",
         "ukmnorge/ukmdipbundle": "dev-master",
+        "ukmnorge/designbundle": "dev-master",
         "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {

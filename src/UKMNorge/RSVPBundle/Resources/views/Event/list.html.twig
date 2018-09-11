@@ -1,15 +1,21 @@
 {% extends "UKMRSVPBundle::layout.html.twig" %}
 
 {% block content %}
-	<h1>Vennligst velg hendelse</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Vennligst velg hendelse</h1>
 
-	<ul class="list list-unstyled list-striped">
-	{% for event in events %}
-		<li>
-			<a href="{{ eventServ.getUrl(event) }}">{{ eventServ.getDateStart(event)|date("d.M") }} {{ eventServ.getName(event) }}</a>
-		</li>
-	{% else %}
-		<li class="alert alert-info">Det er ikke lagt til noen hendelser enda</li>
-	{% endfor %}
-	</ul>
+				<ul class="list list-unstyled list-striped">
+				{% for event in events %}
+					<li>
+						<a href="{{ eventServ.getUrl(event) }}">{{ eventServ.getDateStart(event)|date("d.M") }} {{ eventServ.getName(event) }}</a>
+					</li>
+				{% else %}
+					<li class="alert alert-info">Det er ikke lagt til noen hendelser enda</li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
 {% endblock %}

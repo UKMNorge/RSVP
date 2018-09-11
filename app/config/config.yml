@@ -50,6 +50,12 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        UKM_HOSTNAME: %UKM_HOSTNAME%
+        SEO: "@ukmdesign.seo"
+        Sitemap: "@ukmdesign.sitemap"
+        THEME: "%UKMresponsive.theme%"
+        section: "%UKMresponsive.section%"
 
 # Doctrine Configuration
 doctrine:
