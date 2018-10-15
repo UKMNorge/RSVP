@@ -20,9 +20,6 @@ parameters:
     facebook_client_id: 'id'
     facebook_client_secret: 'secret'
     UKM_HOSTNAME: ukm.dev
-    dip_location: 'ambassador'
-    dip_firewall_area: secure_area
-    dip_entry_point: ukm_amb_join_address
     
     ukmsms.system_id: UKMRSVP
     ukmsms.price: 0.4
@@ -33,7 +30,21 @@ parameters:
     ukm_dip.entry_point: ~
     ukm_dip.api_key: ~
     ukm_dip.api_secret: ~
+    ukm_dip.token_address: ~
+    ukm_dip.delta_login_address: ~
     ukm_dip.token_salt: ~
     ukm_dip.user_class: AppBundle\Entity\User
     ukmapi.api_key: rsvp
     ukmapi.api_secret: ~
+
+    UKMresponsive.theme: ''
+    UKMresponsive.section:
+        title: UKM RSVP
+        url: //rsvp.ukm.no
+
+    SEOdefaultsApp:
+        title: UKM RSVP
+        canonical: //rsvp.ukm.no
+        description: Kommer du?
+        siteName: UKM RSVP
+        section: organisasjon

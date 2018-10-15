@@ -43,12 +43,12 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return '/tmp/symfony/rsvp/cache/'.$this->getEnvironment();
+        return $_ENV['HOME'].'/cache/symfony/rsvp/'.$this->environment;
     }
-
+    
     public function getLogDir()
     {
-        return '/tmp/symfony/rsvp/logs';
+        return $_ENV['HOME'].'/logs/symfony/rsvp/'.$this->environment;
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
